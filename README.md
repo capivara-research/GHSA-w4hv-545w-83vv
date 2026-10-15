@@ -22,3 +22,7 @@ The screenshot below records the private GitHub Security Advisory, affected vers
 ## Disclosure note
 
 This repository documents the existence, scope and attribution of the report. The report concerns an incomplete security fix and additional PHP object-deserialization sinks in Block, Document Editable and WebDAV delete-log handling. Detailed coordination and remediation remain with the vendor through the advisory linked above.
+
+## Reproduction material
+
+The [`poc/`](./poc/) directory contains a source verifier for all three affected sinks and a controlled PHP probe demonstrating the difference between unrestricted and disabled class reconstruction. The documented exploitability boundary distinguishes the proven deserialization primitive from the additional write primitive required for a remote attack.
