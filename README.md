@@ -14,6 +14,20 @@ Public research reference for the security report privately submitted to the Pim
 - CVE status: No CVE assigned to this report
 - Researcher credit: **Fernando Viana - Capivara Research**
 
+## Verification evidence
+
+The screenshot below is a direct capture of both PoCs in this repository running against audited Pimcore commit `3f71d75fef8736d2f398843c1ccf8bc5722b736a`.
+
+![Executed Pimcore sink verifier and safe unrestricted-deserialization probe](./evidence/pimcore-sinks-and-probe.png)
+
+The first command confirms the three production calls to `Serialize::unserialize(..., true)` and the presence of restore commit `879c0a1`. The second command uses a benign local marker class and demonstrates the security boundary:
+
+- `allowed_classes=true`: PHP reconstructs the class and executes `__wakeup()`;
+- `allowed_classes=false`: the magic method does not execute and PHP returns `__PHP_Incomplete_Class`;
+- no command-execution gadget or remote target is used.
+
+This proves the unrestricted-deserialization primitive and the behavior of the boolean control. It does not, by itself, claim a complete remote delivery/write primitive for every sink.
+
 ## Technical targets
 
 | Sink | Affected file and function | Attacker-controlled persisted value |
